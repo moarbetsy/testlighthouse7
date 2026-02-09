@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Performance | Personal Training & Nutrition Coaching</title>
+    <meta name="description" content="Elite personal training in Chicago. Specialized in strength conditioning, weight loss, and injury recovery. Book your free consultation today.">
+    <link rel="canonical" href="https://apex-performance-demo.com/">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Apex Performance | Personal Training">
+    <meta property="og:description" content="Transform your body and mind with elite personal training tailored to your goals.">
+    <meta property="og:url" content="https://apex-performance-demo.com/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- 
+    SECURITY TODO: Production Lock-down
+    Current CSP uses 'unsafe-inline' to ensure immediate functionality in this single-file demo.
+    To achieve 100/100 Best Practices:
+    1. Calculate hash of the JS block: echo -n "JS_CONTENT" | openssl dgst -sha384 -binary | openssl base64
+    2. Replace 'unsafe-inline' in script-src with 'sha384-YOUR_HASH'
+    3. If hosting allows, move styles to external file and remove style-src 'unsafe-inline'
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://images.unsplash.com data:; font-src 'self'; base-uri 'self'; form-action 'self'">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Apex Performance",
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48",
+      "telephone": "+1-555-010-5555",
+      "email": "coach@apex-performance-demo.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Fitness Blvd",
+        "addressLocality": "Chicago",
+        "addressRegion": "IL",
+        "postalCode": "60601",
+        "addressCountry": "US"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "06:00",
+        "closes": "20:00"
+      }
+    }
+    </script>
+
+    <!-- Preload Critical Assets -->
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preload" as="image" 
+          href="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800"
+          imagesrcset="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400 400w,
+                       https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800 800w,
+                       https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200 1200w"
+          imagesizes="100vw">
+
+    <style>
+        /* Critical CSS */
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #38bdf8; /* Sky 400 - High contrast on dark */
+            --primary-hover: #0ea5e9;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --spacing-unit: 1rem;
+            --container-width: 1200px;
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        html { scroll-behavior: smooth; height: 100%; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Utilities */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--primary); color: #000; padding: 8px 16px; z-index: 100; font-weight: bold; text-decoration: none; transition: top 0.2s; }
+        .skip-link:focus { top: 0; outline: 3px solid #fff; }
+        
+        :focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+
+        .container { width: 90%; max-width: var(--container-width); margin: 0 auto; padding: 0 var(--spacing-unit); }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #0f172a; /* Dark text on light blue for contrast > 4.5:1 */
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+
+        /* Typography */
+        h1, h2, h3 { line-height: 1.2; margin-bottom: 1rem; color: #fff; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
+        h3 { font-size: 1.5rem; }
+        p { margin-bottom: 1.5rem; color: var(--text-muted); max-width: 65ch; }
+
+        /* Header */
+        header { position: absolute; width: 100%; top: 0; z-index: 50; padding: 1.5rem 0; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+        
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 1.1rem; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Mobile Nav */
+        .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 2rem; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: var(--bg-color); /* Fallback */
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .hero-content { position: relative; z-index: 10; padding-top: 4rem; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* Sections */
+        section { padding: 5rem 0; }
+        .bg-surface { background-color: var(--surface); }
+
+        /* Services Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .card { background: var(--bg-color); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+
+        /* Form */
+        .form-grid { display: grid; gap: 1.5rem; max-width: 600px; margin: 0 auto; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-weight: 600; color: #fff; }
+        input, textarea, select {
+            padding: 12px;
+            background: var(--surface);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        input:focus, textarea:focus, select:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+        /* Footer */
+        footer { background: #020617; padding: 3rem 0; margin-top: auto; border-top: 1px solid #1e293b; }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+        .footer-col h4 { color: #fff; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+        .footer-col a { color: var(--text-muted); text-decoration: none; }
+        .footer-col a:hover { color: var(--primary); text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <header role="banner">
+        <div class="container nav-wrapper">
+            <a href="/" class="logo">APEX <span>PERFORMANCE</span></a>
+            <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+                ☰
+            </button>
+            <nav id="primary-nav">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Stories</a></li>
+                    <li><a href="#contact" class="btn" style="padding: 8px 16px;">Book Free Consult</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <img class="hero-bg" 
+                 src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800"
+                 srcset="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400 400w,
+                         https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800 800w,
+                         https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200 1200w"
+                 sizes="100vw"
+                 width="800" height="600"
+                 alt="Athlete lifting weights in a gym environment"
+                 fetchpriority="high"
+                 decoding="async">
+            
+            <div class="container hero-content">
+                <h1 id="hero-title">Forge Your<br><span style="color: var(--primary)">Ultimate Physique</span></h1>
+                <p style="font-size: 1.25rem; color: #e2e8f0;">Elite personal training specialized in strength conditioning, functional movement, and sustainable lifestyle transformation.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn">Start Your Journey</a>
+                    <a href="#services" class="btn btn-outline">View Programs</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats/Features -->
+        <section class="bg-surface">
+            <div class="container">
+                <div class="grid" style="text-align: center;">
+                    <div>
+                        <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;">500+</h3>
+                        <p>Clients Transformed</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;">10+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;">100%</h3>
+                        <p>Dedication</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="grid" style="align-items: center;">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600" 
+                             srcset="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=300 300w,
+                                     https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600 600w"
+                             sizes="(max-width: 768px) 100vw, 50vw"
+                             alt="Coach Mark instructing a client" 
+                             width="600" height="800"
+                             loading="lazy"
+                             decoding="async"
+                             style="width: 100%; height: auto; border-radius: 12px;">
+                    </div>
+                    <div>
+                        <h2>More Than Just Lifting Weights</h2>
+                        <p>I'm Mark, a certified NASM Personal Trainer and Nutrition Coach. My philosophy is simple: <strong>consistency beats intensity</strong>.</p>
+                        <p>I don't believe in crash diets or unsustainable workout routines. We build a foundation of functional strength that improves your life outside the gym, not just inside it. Whether you're recovering from injury or training for a marathon, we tailor every rep to your goals.</p>
+                        <ul style="list-style: none; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary)">✓</span> Biomechanics Analysis
+                            </li>
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary)">✓</span> Customized Nutrition Plans
+                            </li>
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary)">✓</span> 24/7 Support
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="bg-surface">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 3rem;">Training Programs</h2>
+                <div class="grid">
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">💪</div>
+                        <h3>1-on-1 Training</h3>
+                        <p>The gold standard. 60-minute sessions focused entirely on your form, progression, and motivation.</p>
+                        <ul style="list-style: disc; padding-left: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                            <li>Custom Program Design</li>
+                            <li>Real-time Form Correction</li>
+                            <li>Nutrition Guidance</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">🌐</div>
+                        <h3>Online Coaching</h3>
+                        <p>Elite programming delivered to your phone. Perfect for the self-motivated traveler or busy professional.</p>
+                        <ul style="list-style: disc; padding-left: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                            <li>App-based Workouts</li>
+                            <li>Weekly Video Check-ins</li>
+                            <li>Form Review via Video</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">🥗</div>
+                        <h3>Nutrition Only</h3>
+                        <p>Fuel your body correctly. We analyze your habits and build a sustainable eating plan.</p>
+                        <ul style="list-style: disc; padding-left: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                            <li>Macro/Calorie Targets</li>
+                            <li>Meal Prep Guides</li>
+                            <li>Grocery Shopping Lists</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 3rem;">Client Success</h2>
+                <div class="grid">
+                    <figure class="card">
+                        <blockquote style="margin-bottom: 1rem;">
+                            "I've lost 30lbs in 6 months, but more importantly, my back pain is completely gone. Best investment I've ever made."
+                        </blockquote>
+                        <figcaption style="font-weight: 600; color: #fff;">— Sarah J., 34</figcaption>
+                    </figure>
+                    <figure class="card">
+                        <blockquote style="margin-bottom: 1rem;">
+                            "The online coaching app is a game changer. I travel for work constantly, and this keeps me accountable no matter where I am."
+                        </blockquote>
+                        <figcaption style="font-weight: 600; color: #fff;">— Mike R., 42</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-surface">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2>Start Your Transformation</h2>
+                    <p>Fill out the form below to schedule your free 30-minute consultation.</p>
+                </div>
+                
+                <form class="form-grid" action="https://formspree.io/f/TEST_ID" method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required autocomplete="name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goal">Primary Goal</label>
+                        <select id="goal" name="goal">
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain</option>
+                            <option value="strength">Strength & Conditioning</option>
+                            <option value="injury-rehab">Injury Rehab</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Tell me about your current fitness level</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%;">Book Consultation</button>
+                    <p style="font-size: 0.875rem; text-align: center;">We respect your privacy. No spam.</p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <a href="/" class="logo" style="font-size: 1.25rem;">APEX <span>PERFORMANCE</span></a>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">Building stronger humans<br>one rep at a time.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Programs</h4>
+                <ul>
+                    <li><a href="#services">1-on-1 Training</a></li>
+                    <li><a href="#services">Online Coaching</a></li>
+                    <li><a href="#services">Nutrition</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                    <li><a href="#" aria-label="Twitter">Twitter</a></li>
+                    <li><a href="mailto:coach@apex-performance-demo.com">Email Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 3rem; font-size: 0.875rem; color: var(--text-muted);">
+            &copy; 2024 Apex Performance. All rights reserved.
+        </div>
+    </footer>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                    menuToggle.setAttribute('aria-expanded', !isExpanded);
+                    navLinks.classList.toggle('active');
+                    
+                    // Trap focus logic could be added here for full 100 A11y on complex menus
+                });
+            }
+
+            // Smooth Scroll for Anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    if (navLinks && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Update focus for accessibility
+                        targetElement.setAttribute('tabindex', '-1');
+                        targetElement.focus();
+                    }
+                });
+            });
+
+            // Intersection Observer for Simple Fade-ins (Performance Friendly)
+            // Respects prefers-reduced-motion via CSS override
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const animateElements = document.querySelectorAll('.card, h2');
+            animateElements.forEach(el => {
+                // Initial state set in JS to prevent layout shift if JS fails/slow
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+            
+            // Handle Form Demo
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    if (form.getAttribute('action').includes('TEST_ID')) {
+                        e.preventDefault();
+                        alert('This is a demo form. In production, connect to Formspree or Netlify Forms.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
