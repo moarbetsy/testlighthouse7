@@ -1,454 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- 
-  SECURITY & CSP CONFIGURATION
-  1. Script Policy: Currently uses 'unsafe-inline' to ensure this single file works immediately.
-     To reach 100/100 Best Practices, calculate the SHA-384 hash of the script content below 
-     and replace 'unsafe-inline' with 'sha384-[YOUR_HASH]'.
-     Command: echo -n "SCRIPT_CONTENT" | openssl dgst -sha384 -binary | openssl base64
-  2. Style Policy: 'unsafe-inline' allowed for critical CSS in head (standard performance practice).
-  3. Images: Restricted to self and data: (SVGs) to prevent tracking pixels.
-  -->
-  <meta http-equiv="Content-Security-Policy" 
-        content="default-src 'self'; 
-                 script-src 'self' 'unsafe-inline'; 
-                 style-src 'self' 'unsafe-inline'; 
-                 img-src 'self' data:; 
-                 font-src 'self'; 
-                 connect-src 'self'; 
-                 base-uri 'self'; 
-                 form-action 'self'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Alex | Elite Personal Training</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary: #ff5722; /* Vibrant Orange */
+            --dark: #121212;
+            --dark-gray: #1e1e1e;
+            --light: #f4f4f4;
+            --gray: #b0b0b0;
+            --transition: all 0.3s ease;
+        }
 
-  <!-- SEO Meta Tags -->
-  <title>Apex Performance | Personal Training & Fitness Coaching</title>
-  <meta name="description" content="Achieve your peak physical form with Apex Performance. 1-on-1 personal training, nutrition planning, and functional fitness coaching. Book your free consultation.">
-  <link rel="canonical" href="https://example.com/">
-  
-  <!-- Local Business Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HealthAndBeautyBusiness",
-    "name": "Apex Performance Training",
-    "description": "Elite personal training and nutritional coaching.",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Metropolis",
-      "addressRegion": "NY"
-    },
-    "telephone": "+15550199"
-  }
-  </script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-  <style>
-    /* 
-    PERFORMANCE OPTIMIZATION:
-    1. System fonts used to eliminate webfont load time (LCP improvement).
-    2. Critical CSS inlined to prevent render-blocking network requests.
-    3. Dark mode aesthetic reduces screen power usage and improves contrast perception.
-    */
-    :root {
-      --bg-primary: #111111;
-      --bg-secondary: #1a1a1a;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent: #22c55e; /* Green-500: Passes 4.5:1 against black */
-      --accent-hover: #16a34a;
-      --accent-text: #000000;
-      --error: #ef4444;
-      --spacing-md: 2rem;
-      --spacing-lg: 4rem;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Reset & Core */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
 
-    /* Accessibility Utilities */
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); border: 0;
-    }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    .skip-link {
-      position: absolute; top: -40px; left: 0;
-      background: var(--accent); color: var(--accent-text);
-      padding: 8px; z-index: 100; text-decoration: none;
-      font-weight: bold; transition: top 0.2s;
-    }
-    .skip-link:focus { top: 0; }
+        ul {
+            list-style: none;
+        }
 
-    /* Focus States */
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-    }
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-    /* Layout */
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-md);
-    }
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    section { padding: var(--spacing-lg) 0; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-    /* Typography */
-    h1, h2, h3 { line-height: 1.2; margin-top: 0; }
-    h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
-    h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: var(--spacing-md); color: var(--accent); }
-    h3 { font-size: 1.5rem; color: var(--text-main); }
-    p { margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.125rem; }
+        .btn:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
 
-    /* Navigation */
-    header {
-      padding: 1.5rem 0;
-      background: rgba(17, 17, 17, 0.95);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid #333;
-      backdrop-filter: blur(5px);
-    }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-main);
-      text-decoration: none;
-      letter-spacing: -0.05em;
-    }
-    .logo span { color: var(--accent); }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      margin: 0; padding: 0;
-    }
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-    .nav-links a {
-      color: var(--text-main);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-    }
-    .nav-links a:hover { color: var(--accent); }
+        section {
+            padding: 80px 0;
+        }
 
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      background-color: var(--accent);
-      color: var(--accent-text);
-      padding: 12px 28px;
-      border-radius: 6px;
-      font-weight: 700;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      min-width: 44px; min-height: 44px; /* Touch target size */
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    
-    .btn:hover { background-color: var(--accent-hover); }
-    .btn:active { transform: scale(0.98); }
+        /* --- HEADER --- */
+        header {
+            background-color: rgba(18, 18, 18, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+        }
 
-    /* Hero Section */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 4rem;
-      min-height: 80vh;
-    }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .hero-content { max-width: 600px; }
-    
-    .hero-image {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      background: #222;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
 
-    /* Services Grid */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+        .logo span {
+            color: var(--primary);
+        }
 
-    .service-card {
-      background: var(--bg-secondary);
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid #333;
-      transition: transform 0.2s;
-    }
-    
-    .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
 
-    /* Form */
-    .form-group { margin-bottom: 1.5rem; }
-    
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-      font-weight: 500;
-    }
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
 
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      background: #222;
-      border: 1px solid #444;
-      border-radius: 6px;
-      color: white;
-      font-size: 1rem;
-    }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
 
-    input:focus, textarea:focus {
-      outline: 2px solid var(--accent);
-      border-color: transparent;
-    }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
 
-    /* Footer */
-    footer {
-      background: var(--bg-secondary);
-      padding: 3rem 0;
-      text-align: center;
-      margin-top: 4rem;
-      border-top: 1px solid #333;
-    }
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
 
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-      .hero-content { margin: 0 auto; }
-      .nav-links { display: none; } /* Simplified for this demo - normally implies hamburger menu */
-      h1 { font-size: 2.5rem; }
-    }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-    /* Reduced Motion */
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .service-card:hover { transform: none; }
-      .btn { transition: none; }
-    }
-  </style>
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about {
+            background-color: var(--dark);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            /* Placeholder styling */
+            background-color: #333;
+            height: 400px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+        }
+        
+        /* Replace the background-color above with an actual img tag in HTML */
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services {
+            background-color: var(--dark-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--dark);
+            padding: 40px;
+            border-radius: 10px;
+            transition: var(--transition);
+            border: 1px solid #333;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* --- RESULTS/TESTIMONIALS --- */
+        .testimonials {
+            background-color: var(--dark);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--dark-gray);
+            padding: 30px;
+            border-radius: 10px;
+            font-style: italic;
+        }
+
+        .client-name {
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            font-style: normal;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact {
+            background-color: var(--dark-gray);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-form input, 
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: var(--dark);
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #000;
+            padding: 40px 0;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 100%;
+                background-color: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                display: none;
+                border-bottom: 1px solid #333;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .about-grid, .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-img {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Accessibility: Skip Link -->
-  <a href="#main" class="skip-link">Skip to main content</a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">COACH <span>ALEX</span></div>
+                <div class="hamburger" onclick="toggleMenu()">☰</div>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+                    <li><a href="#about" onclick="toggleMenu()">About</a></li>
+                    <li><a href="#services" onclick="toggleMenu()">Services</a></li>
+                    <li><a href="#results" onclick="toggleMenu()">Results</a></li>
+                    <li><a href="#contact" class="btn" onclick="toggleMenu()">Book Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <header>
-    <div class="container">
-      <nav role="navigation" aria-label="Main">
-        <a href="#" class="logo">Apex<span>Performance</span></a>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Training</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a href="#contact" class="btn">Book Consult</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" tabindex="-1">
-    
     <!-- Hero Section -->
-    <section class="container hero">
-      <div class="hero-content">
-        <h1>Unlock Your True Physical Potential</h1>
-        <p>Expert personal training tailored to your physiology and goals. Stop guessing at the gym and start training with purpose.</p>
-        <a href="#contact" class="btn">Start Your Transformation</a>
-      </div>
-      <!-- 
-        IMAGE STRATEGY: 
-        Using an embedded SVG Data URI to guarantee the image loads (0 external dependencies).
-        Includes width/height to prevent CLS (Cumulative Layout Shift).
-        fetchpriority="high" for LCP optimization.
-      -->
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23222'/%3E%3Cpath d='M200 300 L300 100 L400 300' stroke='%2322c55e' stroke-width='4' fill='none'/%3E%3Ccircle cx='300' cy='100' r='20' fill='%2322c55e'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%23555'%3EApex Performance Training%3C/text%3E%3C/svg%3E" 
-           alt="Illustration of a fitness trajectory graph" 
-           class="hero-image"
-           width="600" 
-           height="400"
-           fetchpriority="high">
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Build Your<br><span>Dream Physique</span></h1>
+            <p>Professional 1-on-1 Personal Training & Nutrition Coaching tailored to your lifestyle.</p>
+            <a href="#contact" class="btn">Start Your Transformation</a>
+            <a href="#services" class="btn btn-outline" style="margin-left: 10px;">View Plans</a>
+        </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="container">
-      <h2>Philosophy & Approach</h2>
-      <div style="max-width: 800px;">
-        <p>Fitness isn't just about aesthetics; it's about longevity, functional strength, and mental resilience. My training methodology combines evidence-based strength and conditioning principles with sustainable nutrition habits.</p>
-        <p>I don't believe in crash diets or unsustainable workout schedules. We build a lifestyle that serves you, not the other way around.</p>
-      </div>
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <!-- Replace src below with your photo -->
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Trainer Photo" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title" style="text-align: left;">Meet Coach Alex</h2>
+                    <p>I don't believe in crash diets or endless hours of cardio. With over 10 years of experience in strength and conditioning, I help busy professionals build muscle, lose fat, and reclaim their energy.</p>
+                    <p><strong>My certifications:</strong></p>
+                    <ul style="margin-bottom: 20px; list-style: disc; margin-left: 20px; color: var(--gray);">
+                        <li>NASM Certified Personal Trainer</li>
+                        <li>Precision Nutrition Level 1</li>
+                        <li>Functional Movement Screen (FMS)</li>
+                    </ul>
+                    <a href="#contact" class="btn">Read My Story</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="container">
-      <h2>Training Programs</h2>
-      <div class="services-grid">
-        <!-- Service 1 -->
-        <article class="service-card">
-          <h3>1-on-1 Coaching</h3>
-          <p>Personalized attention in a private studio setting. We focus on form correction, progressive overload, and injury prevention.</p>
-          <ul style="color: var(--text-muted); padding-left: 1.2rem; margin-bottom: 1.5rem;">
-            <li>Customized hypertrophy blocks</li>
-            <li>Real-time form feedback</li>
-            <li>Nutritional guidance</li>
-          </ul>
-        </article>
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Training Options</h2>
+            <p class="section-subtitle">Choose the plan that fits your schedule and goals.</p>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">💪</div>
+                    <h3>1-on-1 Training</h3>
+                    <p>In-person coaching at Iron Gym. Perfect for beginners or those needing form correction.</p>
+                    <ul style="margin-bottom: 20px; color: var(--gray); list-style: circle; padding-left: 15px;">
+                        <li>60 Minute Sessions</li>
+                        <li>Custom Workout App</li>
+                        <li>Nutrition Guidance</li>
+                    </ul>
+                    <div class="price">From $85/session</div>
+                </div>
 
-        <!-- Service 2 -->
-        <article class="service-card">
-          <h3>Online Programming</h3>
-          <p>For the self-motivated athlete who needs structure. Get a full program delivered via app with weekly check-ins.</p>
-          <ul style="color: var(--text-muted); padding-left: 1.2rem; margin-bottom: 1.5rem;">
-            <li>Video analysis of lifts</li>
-            <li>Weekly adjustments</li>
-            <li>24/7 Chat support</li>
-          </ul>
-        </article>
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Online Coaching</h3>
+                    <p>Train on your own time with my programming. Full accountability without the scheduling limits.</p>
+                    <ul style="margin-bottom: 20px; color: var(--gray); list-style: circle; padding-left: 15px;">
+                        <li>Weekly Check-ins</li>
+                        <li>Form Review via Video</li>
+                        <li>Macro/Meal Plans</li>
+                    </ul>
+                    <div class="price">$250/month</div>
+                </div>
 
-        <!-- Service 3 -->
-        <article class="service-card">
-          <h3>Small Group</h3>
-          <p>The energy of a class with the specificity of personal training. Groups capped at 4 people to ensure quality.</p>
-          <ul style="color: var(--text-muted); padding-left: 1.2rem; margin-bottom: 1.5rem;">
-            <li>Cost-effective</li>
-            <li>Community motivation</li>
-            <li>High-intensity intervals</li>
-          </ul>
-        </article>
-      </div>
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Small Group</h3>
+                    <p>Train with 2-3 friends. High energy, shared cost, and great for motivation.</p>
+                    <ul style="margin-bottom: 20px; color: var(--gray); list-style: circle; padding-left: 15px;">
+                        <li>Split the cost</li>
+                        <li>Competition & Fun</li>
+                        <li>Structured Program</li>
+                    </ul>
+                    <div class="price">$50/person</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="results" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Client Wins</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"I lost 20lbs in 3 months. Alex didn't just give me a workout, he taught me how to eat without giving up my favorite foods."</p>
+                    <div class="client-name">- Sarah M.</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"My back pain is gone and my squat went up by 50lbs. Best investment I've made for my health."</p>
+                    <div class="client-name">- James D.</div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The online coaching app is super easy to use. I love knowing exactly what to do when I walk into the gym."</p>
+                    <div class="client-name">- Emily R.</div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container">
-      <div style="max-width: 600px; margin: 0 auto;">
-        <h2 style="text-align: center;">Book Your Consultation</h2>
-        <p style="text-align: center;">Ready to commit? Fill out the form below to schedule a free 15-minute discovery call.</p>
-        
-        <form action="#" method="POST" style="background: var(--bg-secondary); padding: 2rem; border-radius: 12px; border: 1px solid #333;">
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" autocomplete="name" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" autocomplete="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="goal">Primary Goal</label>
-            <select id="goal" name="goal" required>
-              <option value="">Select a goal...</option>
-              <option value="strength">Build Strength</option>
-              <option value="weightloss">Weight Loss</option>
-              <option value="endurance">Endurance/Cardio</option>
-              <option value="mobility">Mobility & Rehab</option>
-            </select>
-          </div>
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Ready to Start?</h2>
+            <p class="section-subtitle">Fill out the form below for a free consultation call.</p>
+            
+            <div class="contact-container">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="info-item">
+                        <span>📍</span>
+                        <p>Iron City Gym, 123 Fitness Blvd, Chicago, IL</p>
+                    </div>
+                    <div class="info-item">
+                        <span>📧</span>
+                        <p>alex@coachalexfitness.com</p>
+                    </div>
+                    <div class="info-item">
+                        <span>📱</span>
+                        <p>(555) 123-4567</p>
+                    </div>
+                    <br>
+                    <p><strong>Gym Hours:</strong><br>Mon-Fri: 6am - 8pm<br>Sat: 8am - 2pm</p>
+                </div>
 
-          <div class="form-group">
-            <label for="message">Anything else I should know?</label>
-            <textarea id="message" name="message" rows="4"></textarea>
-          </div>
-
-          <button type="submit" class="btn" style="width: 100%;">Send Request</button>
-        </form>
-      </div>
+                <!-- Contact Form -->
+                <form class="contact-form" onsubmit="submitForm(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email Address" required>
+                    <select>
+                        <option value="">What is your main goal?</option>
+                        <option value="weightloss">Weight Loss</option>
+                        <option value="muscle">Build Muscle</option>
+                        <option value="sport">Sports Performance</option>
+                        <option value="health">General Health</option>
+                    </select>
+                    <textarea rows="5" placeholder="Tell me about your current struggles..."></textarea>
+                    <button type="submit" class="btn" style="width: 100%;">Send Application</button>
+                </form>
+            </div>
+        </div>
     </section>
 
-  </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="margin-bottom: 20px;">COACH <span>ALEX</span></div>
+            <p>&copy; 2024 Coach Alex Fitness. All rights reserved.</p>
+            <div style="margin-top: 20px;">
+                <a href="#" style="margin: 0 10px;">Instagram</a>
+                <a href="#" style="margin: 0 10px;">Facebook</a>
+                <a href="#" style="margin: 0 10px;">YouTube</a>
+            </div>
+        </div>
+    </footer>
 
-  <footer>
-    <div class="container">
-      <p class="logo" style="margin-bottom: 1rem;">Apex<span>Performance</span></p>
-      <p>&copy; 2024 Apex Performance Training. All rights reserved.</p>
-      <p style="font-size: 0.9rem;">
-        <a href="#" style="color: var(--text-muted); margin: 0 10px;">Privacy Policy</a>
-        <a href="#" style="color: var(--text-muted); margin: 0 10px;">Terms of Service</a>
-      </p>
-    </div>
-  </footer>
+    <!-- Scripts -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
 
-  <!-- 
-  PERFORMANCE NOTE:
-  Defer script to ensure HTML parsing is not blocked. 
-  Code contains no inline event listeners (onclick), complying with CSP best practices.
-  -->
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Smooth Scroll implementation for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href');
-          if (targetId === '#') return;
-          
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-            // Update focus for accessibility
-            targetElement.setAttribute('tabindex', '-1');
-            targetElement.focus();
-          }
-        });
-      });
-
-      // Simple form handling (Client-side validation enhancement)
-      const form = document.querySelector('form');
-      if (form) {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          // In a real app, you would fetch() to an API here.
-          const btn = form.querySelector('button');
-          const originalText = btn.innerText;
-          
-          btn.innerText = 'Sent!';
-          btn.style.backgroundColor = '#16a34a';
-          form.reset();
-          
-          setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.backgroundColor = '';
-          }, 3000);
-          
-          alert('Thanks for your interest! This is a demo form.');
-        });
-      }
-    });
-  </script>
+        // Form Submission Logic (Simulated)
+        function submitForm(event) {
+            event.preventDefault(); // Prevents page reload
+            
+            // In a real website, you would connect this to a backend or service like Formspree
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Message Sent! ✅";
+            btn.style.backgroundColor = "#4caf50";
+            
+            setTimeout(() => {
+                event.target.reset();
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "var(--primary)";
+            }, 3000);
+            
+            alert("Thanks for reaching out! I'll get back to you within 24 hours.");
+        }
+    </script>
 </body>
 </html>
